@@ -1,19 +1,21 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import getters from './getters'
-import app from './modules/app'
-import settings from './modules/settings'
-import user from './modules/user'
+
 
 Vue.use(Vuex)
+const req = require.context('./modules', false, /\.js$/)
+const Arr1 = req.keys().map(item => item.split('./')[1]).map(item => item.split('.js')[0])
+const Arr2 = req.keys().map(req)
+const modules = {}
+Arr1.forEach((item, index) => {
+  modules[item] = Arr2[index].default
+})
+console.log(modules);
 
 const store = new Vuex.Store({
-  modules: {
-    app,
-    settings,
-    user
-  },
-  getters
+  modules,
+  getters,
 })
 
 export default store
