@@ -22,10 +22,22 @@
 </template>
 
 <script>
+import {getDepartmentsListApi} from '@/api/departments'
 export default {
     name: 'AddDepart',
 
     data() {
+      const checkRepeatName = async (value,rule,cb)=>{
+        const {depts} = await getDepartmentsListApi()
+        let isRepeat = false
+        if(this.formData.id){
+          isRepeat = depts.filter(item=>item.pid===this.formData.pid && item.id!==this.formData.id).some(item.name===value)
+        } 
+        else{
+          isRepeat = depts.filter(item=>item.pid===this.formData.pid).some(item.name===value)      
+        }
+        return isRepeat? cb(new Error(`同级部门下已经有${value}的部门了`)):cb()
+      }
         return {
             dialogVisible:false,
             formData:{
@@ -36,7 +48,9 @@ export default {
                 pid:'',
             },
             formRules:{
-                name:[{required:true,message:'请输入部门名称',trigger:'blur'}],
+                name:[{required:true,message:'请输入部门名称',trigger:'blur'},
+                {validator:checkRepeatName,trigger:'blur',}
+                ],
                 code:[{required:true,message:'请输入部门编码',trigger:'blur'}],
                 manager:[{required:true,message:'请输入部门管理者',trigger:'blur'}],
                 introduce:[{required:true,message:'请输入部门介绍',trigger:'blur'}],
