@@ -5,11 +5,11 @@
         <TreeTool @addDepart='addDepart' :isRoot="true" :treeNode="company"/>
         <br/>
         <el-tree :data="depts" :props="{label:'name'}" >
-          <TreeTool @addDepart='addDepart' slot-scope="{data}" :treeNode="data" />
+          <TreeTool @updateList='initData' @addDepart='addDepart' @editDepart='editDepart' slot-scope="{data}" :treeNode="data" />
         </el-tree>
       </el-card>
 
-      <AddDepart  ref="addDepart"/>
+      <AddDepart @updateList='initData'  ref="addDepart"/>
     </div>
   </div>
 </template>
@@ -17,7 +17,7 @@
 <script>
 import TreeTool from './components/tree-tool.vue'
 import AddDepart from './components/add-Depart.vue'
-import {getDepartmentsListApi} from '@/api/departments'
+import {getDepartmentsListApi,getDepartmentsInfoApi} from '@/api/departments'
 import {transListToTreeData} from '@/utils'
 export default {
   name:'Departments',
@@ -51,6 +51,11 @@ export default {
     addDepart(val){
       this.$refs.addDepart.dialogVisible=true
       this.$refs.addDepart.formData.pid = val.id
+    },
+    async editDepart(id){
+      const res= await getDepartmentsInfoApi(id)
+      this.$refs.addDepart.formData = res
+      this.$refs.addDepart.dialogVisible=true
     }
   }
 }
