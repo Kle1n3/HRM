@@ -15,6 +15,8 @@ import router from './router'
 import '@/icons' // icon
 import '@/permission' // permission control
 import * as directives from '@/directive'
+import Component from '@/components'
+Vue.use(Component)
 /**
  * If you don't want to use mock-server
  * you want to use MockJs for mock api
@@ -29,6 +31,12 @@ import * as directives from '@/directive'
 // }
 Object.keys(directives).forEach(key => {
   Vue.directive(key, directives[key])
+})
+
+import * as filters from '@/filters'
+
+Object.keys(filters).forEach(key => {
+  Vue.filter(key, filters[key])
 })
 
 // set ElementUI lang to EN
