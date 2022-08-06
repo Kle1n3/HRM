@@ -11,19 +11,19 @@
         <el-table-column prop="description" align="center" label="描述" />
         <el-table-column align="center" label="操作">
           <template slot-scope="{row}">
-            <el-button type="text" @click="addbtn(row.pid,2)" >添加</el-button>
-            <el-button type="text">编辑</el-button>
-            <el-button type="text">删除</el-button>
+            <el-button type="text" @click="addbtn(row.id,2)" >添加</el-button>
+            <el-button type="text" @click="edit(row.id)" >编辑</el-button>
+            <el-button type="text" @click="del(row.id)" >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
-      <add-auth ref="addAuth"/>
+      <add-auth ref="addAuth" @updateList = initData />
     </div>
   </div>
 </template>
 
 <script>
-import {getPermissionListApi} from '@/api/permission'
+import {getPermissionListApi, getPermissionInfoApi,delDepartmentApi} from '@/api/permission'
 import addAuth from './components/add-auth.vue';
 export default {
   components: { addAuth },
@@ -48,9 +48,20 @@ export default {
       this.list = transToTreeData(data,'0')
     },
     addbtn(pid,type){
+      console.log(pid);
       this.$refs.addAuth.formData.pid = pid
       this.$refs.addAuth.formData.type = type
       this.$refs.addAuth.showDialog=true
+    },
+    async edit(id){
+      this.$refs.addAuth.formData = await getPermissionInfoApi(id)
+      this.$refs.addAuth.showDialog = true
+    },
+    async del(id){
+      await this.$confirm('确定删除吗？')
+      await delDepartmentApi(id)
+      this.$message.success('删除成功')
+      this.initData()
     }
   }
 }

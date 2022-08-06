@@ -31,9 +31,9 @@
 </template>
 
 <script>
+import {addDepartmentApi,editDepartmentInfoApi} from '@/api/permission'
 export default {
     name: 'AddAuth',
-
     data() {
         return {
             showDialog:false,
@@ -62,6 +62,23 @@ export default {
     },
 
     methods: {
+      async btnOK(){
+        try {
+          await this.$refs.form.validate()
+        } catch (error) {
+          return console.log(error);
+        }
+        if(this.formData.id){
+          await editDepartmentInfoApi(this.formData)
+          this.$message.success('修改成功')
+        }
+        else{
+          await addDepartmentApi(this.formData)
+          this.$message.success('添加成功')
+        }
+        this.$emit('updateList')
+        this.showDialog=false
+      },
         btnCancel(){
             this.formData={}
         }

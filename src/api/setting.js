@@ -29,3 +29,10 @@ export const delRoleApi = id => request({
 export const getCompanyInfoApi = id => request({
     url: '/company/' + id,
 })
+
+// 给角色分配权限
+export const assignAuthApi = data => request({
+    method: 'PUT',
+    url: '/sys/role/assignPrem',
+    data,
+})

@@ -20,7 +20,7 @@
               </el-table-column>
               <el-table-column fixed="right" label="操作" align="center">
                 <template slot-scope="scope">
-                  <el-button type="success" size="small">分配权限</el-button>
+                  <el-button @click="addbtn(scope.row.id)" type="success" size="small">分配权限</el-button>
                   <el-button
                     @click="editbtn(scope.row.id)"
                     type="primary"
@@ -121,6 +121,7 @@
           <el-button type="primary" @click="addbtn">确 定</el-button>
         </span>
       </el-dialog>
+      <assign-auth ref="assignAuth" />
     </div>
   </div>
 </template>
@@ -134,7 +135,9 @@ import {
   delRoleApi,
   getCompanyInfoApi,
 } from "@/api/setting";
+import assignAuth from './components/assign-auth.vue';
 export default {
+  components: { assignAuth },
   name: "Setting",
   data() {
     return {
@@ -207,6 +210,12 @@ export default {
     close() {
       this.formData = {};
     },
+    async addbtn(id){
+      const {permIds} = await getRolesInfoApi(id)
+      this.$refs.assignAuth.checkedList = permIds
+      this.$refs.assignAuth.userid = id
+      this.$refs.assignAuth.dialogVisible=true
+    }
   },
 };
 </script>

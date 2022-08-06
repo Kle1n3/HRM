@@ -6,22 +6,25 @@
           <span>共{{ total }}条记录</span>
         </template>
         <template #after>
-          <el-button size="small" type="success" @click="exportToExcelHandler"
+          <el-button v-if="checkPermission('employees-export')" size="small" type="success" @click="exportToExcelHandler"
             >Excel导出</el-button
           >
           <el-button
+          v-if="checkPermission('employees-export')"
             size="small"
             type="warning"
             @click="exportComplicateHeaderExcel"
             >复杂表头Excel导出</el-button
           >
           <el-button
+          v-if="checkPermission('employees-import')"
             size="small"
             type="info"
             @click="$router.push('/import?type=user')"
             >Excel导入</el-button
           >
           <el-button
+          v-if="checkPermission('employees-add')"
             size="small"
             type="primary"
             @click="$refs.addemployee.dialogVisible = true"
@@ -73,6 +76,7 @@
           >
             <template slot-scope="{ row }">
               <el-button
+              v-if="checkPermission('employees-edit')"
                 type="text"
                 size="small"
                 @click="$router.push(`/employees/detail/${row.id}`)"
@@ -82,7 +86,7 @@
               <el-button type="text" size="small">调岗</el-button>
               <el-button type="text" size="small">离职</el-button>
               <el-button type="text" size="small" @click="role(row.id)" >角色</el-button>
-              <el-button type="text" size="small" @click="delbtn(row.id)"
+              <el-button v-if="checkPermission('employees-del')" type="text" size="small" @click="delbtn(row.id)"
                 >删除</el-button
               >
             </template>
