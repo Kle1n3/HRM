@@ -12,10 +12,13 @@
     <!-- <breadcrumb class="breadcrumb-container" /> -->
 
     <div class="right-menu">
+      <screen-full class="right-menu-item" />
+      <theme-picker class="right-menu-item" />
+      <lang class="right-menu-item" />
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
-          <img v-imgError='defaultImg' :src="avatar" class="user-avatar" />
-          <span class="name">{{username}}</span>
+          <img v-imgError="defaultImg" :src="avatar" class="user-avatar" />
+          <span class="name">{{ username }}</span>
           <i class="el-icon-caret-bottom" style="color: #fff" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
@@ -38,20 +41,20 @@
 import { mapGetters } from "vuex";
 import Breadcrumb from "@/components/Breadcrumb";
 import Hamburger from "@/components/Hamburger";
-import defaultImg from '@/assets/common/defaultImg.gif'
+import defaultImg from "@/assets/common/defaultImg.gif";
 
 export default {
   components: {
     Breadcrumb,
     Hamburger,
   },
-  data(){
-    return{
-      defaultImg:defaultImg,
-    }
+  data() {
+    return {
+      defaultImg: defaultImg,
+    };
   },
   computed: {
-    ...mapGetters(["sidebar", "avatar",'username']),
+    ...mapGetters(["sidebar", "avatar", "username"]),
   },
   methods: {
     toggleSideBar() {
@@ -125,7 +128,7 @@ export default {
       height: 100%;
       font-size: 18px;
       color: #5a5e66;
-      vertical-align: text-bottom;
+      vertical-align: middle;
 
       &.hover-effect {
         cursor: pointer;
