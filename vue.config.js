@@ -36,13 +36,13 @@ module.exports = {
       warnings: false,
       errors: true
     },
-    proxy: {
-      '/api': {
-        target: 'http://ihrm.itheima.net',
-        // target: 'http://192.168.19.62:3000/',
-        changeOrigin: true,
-      }
-    }
+    /*  proxy: {
+       '/api': {
+         target: 'http://ihrm.itheima.net',
+         // target: 'http://192.168.19.62:3000/',
+         changeOrigin: true,
+       }
+     } */
     // before: require('./mock/mock-server.js')
   },
   configureWebpack: {
