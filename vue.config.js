@@ -24,7 +24,7 @@ module.exports = {
    * In most cases please use '/' !!!
    * Detail: https://cli.vuejs.org/config/#publicpath
    */
-  publicPath: '/',
+  publicPath: process.env.NODE_ENV === 'development' ? '/' : './',
   outputDir: 'dist',
   assetsDir: 'static',
   lintOnSave: process.env.NODE_ENV === 'development',
@@ -38,8 +38,8 @@ module.exports = {
     },
     proxy: {
       '/api': {
-        // target: 'http://ihrm.itheima.net',
-        target: 'http://192.168.19.62:3000/',
+        target: 'http://ihrm.itheima.net',
+        // target: 'http://192.168.19.62:3000/',
         changeOrigin: true,
       }
     }
